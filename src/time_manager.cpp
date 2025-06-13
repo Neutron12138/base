@@ -5,8 +5,8 @@ namespace base
     double TimeManager::get_raw_elapsed() const
     {
         auto now = Clock::now();
-        Duration duration = now - m_last_update_time;
-        return duration.count();
+        Duration delta = now - m_last_update_time;
+        return delta.count();
     }
 
     double TimeManager::get_scaled_elapsed() const
@@ -17,8 +17,8 @@ namespace base
     double TimeManager::get_total_elapsed() const
     {
         auto now = Clock::now();
-        Duration duration = now - m_start_time;
-        return duration.count();
+        Duration delta = now - m_start_time;
+        return delta.count();
     }
 
     void TimeManager::update()

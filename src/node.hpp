@@ -16,6 +16,8 @@ namespace base
     class Node : public PolymorphicObject, public std::enable_shared_from_this<Node>
     {
     public:
+        /// @brief 创建一个节点对象
+        /// @return 节点对象引用
         static NodeRef create() { return std::make_shared<Node>(); }
 
     private:
@@ -26,13 +28,7 @@ namespace base
 
     public:
         Node() {}
-        ~Node() override
-        {
-            if (is_root())
-                return;
-
-            m_parent.lock()->_remove_child(shared_from_this());
-        }
+        ~Node() override = default;
 
     protected:
         /// @brief 当被附加到父级节点时

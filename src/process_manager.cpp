@@ -12,8 +12,8 @@ namespace base
     double ProcessManager::get_raw_physics_elapsed() const
     {
         auto now = Clock::now();
-        Duration duration = now - m_last_physics_update_time;
-        return duration.count();
+        Duration delta = now - m_last_physics_update_time;
+        return delta.count();
     }
 
     double ProcessManager::get_scaled_physics_elapsed() const
@@ -58,6 +58,7 @@ namespace base
 
     void ProcessManager::update()
     {
+        // 计算距离上一物理帧经过的时间
         double elapsed = get_raw_physics_elapsed();
         if (elapsed >= m_physics_update_interval)
         {

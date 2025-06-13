@@ -40,6 +40,34 @@ protected:
     }
 };
 
+class MyEvent : public base::Event
+{
+public:
+    static constexpr base::Int64 EVENT_OK = 123;
+
+public:
+    ~MyEvent() override = default;
+
+public:
+    base::Int64 type() const override
+    {
+        return EVENT_OK;
+    }
+};
+
+class MyEventHandler : public base::EventHandler
+{
+protected:
+    void _handle_event(const base::EventRef &event) override
+    {
+        if (event->type() == MyEvent::EVENT_OK)
+        {
+            event->set_handled();
+            std::cout << "event received" << std::endl;
+        }
+    }
+};
+
 int main()
 {
     MyNotifiable noti;
@@ -59,6 +87,12 @@ int main()
     mpm.set_target_physics_fps(10);
     for (; mpm.get_total_elapsed() <= 1.01; mpm.update())
         ;
+
+    base::EventRef e = std::make_shared<MyEvent>();
+    MyEventHandler meh;
+    std::cout << "event is handled: " << e->is_handled() << std::endl;
+    meh.request_handle_event(e);
+    std::cout << "event is handled: " << e->is_handled() << std::endl;
 
     return 0;
 }

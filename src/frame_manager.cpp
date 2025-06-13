@@ -40,6 +40,7 @@ namespace base
 
     void FrameManager::update()
     {
+        // 计算距离上一帧经过的时间
         double elapsed = get_raw_elapsed();
         if (elapsed < m_update_interval)
             return;
