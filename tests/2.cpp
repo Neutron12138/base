@@ -48,6 +48,7 @@ void test2()
     base::TreeNodeRef node2 = base::TreeNode::create();
     node1->add_child(node2);
     tree1->get_root()->add_child(node1);
+    tree1->request_initialize();
     std::cout << node1->is_child() << "," << (node1->get_parent().lock() == tree1->get_root())
               << "," << (node1->get_tree().lock() == tree1) << std::endl;
 
@@ -67,6 +68,7 @@ void test2()
               << "," << (node1->get_tree().lock() == nullptr) << std::endl;
 
     tree2->get_root()->add_child(node1);
+    tree2->request_initialize();
     std::cout << node1->is_child() << "," << (node1->get_parent().lock() == tree2->get_root())
               << "," << (node1->get_tree().lock() == tree2) << std::endl;
 
