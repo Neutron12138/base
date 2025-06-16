@@ -1,80 +1,99 @@
 #include <iostream>
-#include <string>
-#include "../src/base.hpp"
-
-class MyNotifiable : public base::Notifiable
-{
-public:
-    static constexpr base::Int64 NOTIFICATION_GOOD = 666;
-
-    void notify(base::Int64 notification) override
-    {
-        if (notification == NOTIFICATION_GOOD)
-        {
-            std::cout << this << ": Good!" << std::endl;
-        }
-    }
-};
+#define BASE_DEFINE_FLOAT_TYPE
+#include "../base/base.hpp"
+#include <glm/glm.hpp>
+#include <glm/detail/type_quat.hpp>
+#include <glm/ext.hpp>
 
 class MyProcessManager : public base::ProcessManager
 {
+public:
+    ~MyProcessManager() override = default;
+
 protected:
     void _on_first_frame() override
     {
-        std::cout << "first frame\t" << get_current_fps() << std::endl;
-    }
-
-    void _on_frame_updated(double delta) override
-    {
-        std::cout << "process\t\t" << delta << "\t" << get_current_fps() << std::endl;
+        std::cout << "[idle frame]\ttime: " << get_total_elapsed()
+                  << "\tframe: " << get_frame_count() << std::endl;
     }
 
     void _on_first_physics_frame() override
     {
-        std::cout << "first physics frame\t" << get_current_physics_fps() << std::endl;
+        std::cout << "[physics frame]\ttime: " << get_total_elapsed()
+                  << "\tframe: " << get_physics_frame_count() << std::endl;
+    }
+
+    void _on_frame_updated(double delta) override
+    {
+        std::cout << "[idle frame]\ttime: " << get_total_elapsed()
+                  << "\tframe: " << get_frame_count()
+                  << "\tdelta: " << delta << std::endl;
     }
 
     void _on_physics_frame_updated(double delta) override
     {
-        std::cout << "physics process\t" << delta << "\t" << get_current_physics_fps() << std::endl;
+        std::cout << "[physics frame]\ttime: " << get_total_elapsed()
+                  << "\tframe: " << get_physics_frame_count()
+                  << "\tdelta: " << delta << std::endl;
     }
 };
 
-class MyEventHandler : public base::EventHandler
+class MyNotifiable : public base::Notifiable
 {
-protected:
-    void _handle_event(const base::EventRef &event) override
+public:
+    void notification(base::Enum what) override
     {
-        event->set_handled();
-        std::cout << "event received" << std::endl;
+        std::cout << "notification received: " << what << std::endl;
     }
+};
+
+class MyMainLoop : public base::MainLoop
+{
+public:
+    ~MyMainLoop() override = default;
+
+protected:
+    void _on_initialize() override {}
+    void _on_update() override { request_quit(); }
+    void _on_shutdown() override {}
 };
 
 int main()
 {
-    MyNotifiable noti;
-    base::Notifiable *noti_ptr = &noti;
-    noti_ptr->notify(MyNotifiable::NOTIFICATION_GOOD);
+    std::cout << "Float32: " << sizeof(base::Float32) << std::endl
+              << "Float64: " << sizeof(base::Float64) << std::endl
+              << "Float128: " << sizeof(base::Float128) << std::endl;
 
-    std::cout << base::to_string("aaa: ", 666, "\n");
-
-    MyProcessManager mpm;
-    mpm.request_first_frame();
-
-    mpm.set_unlimited_fps();
-    mpm.set_unlimited_physics_fps();
-    for (; mpm.get_total_elapsed() <= 0.01; mpm.update())
-        ;
-    mpm.set_target_fps(5);
-    mpm.set_target_physics_fps(10);
-    for (; mpm.get_total_elapsed() <= 1.01; mpm.update())
+    auto manager = std::make_shared<MyProcessManager>();
+    manager->set_target_fps(5);
+    manager->set_target_physics_fps(10);
+    manager->request_first_frame();
+    for (; manager->get_physics_frame_count() <= 10; manager->update())
         ;
 
-    base::EventRef e = std::make_shared<base::Event>();
-    MyEventHandler meh;
-    std::cout << "event is handled: " << e->is_handled() << std::endl;
-    meh.request_handle_event(e);
-    std::cout << "event is handled: " << e->is_handled() << std::endl;
+    auto notifiable = std::make_shared<MyNotifiable>();
+    base::notify(notifiable, 114);
+
+    MyMainLoop main_loop;
+    main_loop.run();
+    std::cout << "exit code: " << main_loop.get_exit_code() << std::endl;
+
+    glm::vec3 p = {1, 0, 0};
+
+    float angle = M_PI / 2.0f;
+    glm::vec3 axis = {1, 0, 1};
+    axis= glm::normalize(axis);
+    axis = float(sin(angle)) * axis;
+    glm::quat q;
+    q.w = cos(angle);
+    q.x = axis.x;
+    q.y = axis.y;
+    q.z = axis.z;
+    q = glm::normalize(q);
+
+    glm::vec3 v = q * p * glm::conjugate(q);
+
+    std::cout << v.x << "," << v.y << "," << v.z << std::endl;
 
     return 0;
 }
