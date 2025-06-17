@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/type.hpp"
+#include "core/enum.hpp"
 #include "core/ref.hpp"
 #include "core/string.hpp"
 #include "core/debug.hpp"

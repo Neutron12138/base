@@ -5,6 +5,7 @@
 #include "main_loop.hpp"
 #include "notifiable.hpp"
 #include "resource.hpp"
+#include "named_object.hpp"
 
 #include "event/event.hpp"
 #include "event/event_handler.hpp"

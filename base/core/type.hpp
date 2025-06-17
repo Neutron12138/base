@@ -25,18 +25,6 @@ namespace base
     /// @brief 大小类型
     using Size = std::size_t;
 
-#ifdef BASE_ENUM_USE_INT32
-    /// @brief 枚举类型
-    using Enum = Int32;
-    /// @brief 位标志类型
-    using Flag = UInt32;
-#else
-    /// @brief 枚举类型
-    using Enum = Int64;
-    /// @brief 位标志类型
-    using Flag = UInt64;
-#endif
-
 #ifdef BASE_DEFINE_FLOAT_TYPE
     /// @brief 32位浮点数
     using Float32 = float;

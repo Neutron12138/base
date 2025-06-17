@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/type.hpp"
+#include "core/enum.hpp"
 #include "core/ref.hpp"
 #include "core/noncopyable_object.hpp"
 #include "core/polymorphic_object.hpp"
@@ -12,7 +12,8 @@ namespace base
     using ResourceWeakRef = Ref<Resource>;
 
     /// @brief 不可拷贝的资源对象
-    class Resource : public NoncopyableObject, public PolymorphicObject
+    class Resource : public NoncopyableObject,
+                     public PolymorphicObject
     {
     public:
         Resource() = default;

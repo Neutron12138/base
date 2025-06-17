@@ -1,6 +1,6 @@
 #pragma once
 
-#include "type.hpp"
+#include "enum.hpp"
 #include "polymorphic_object.hpp"
 
 namespace base
