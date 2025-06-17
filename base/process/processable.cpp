@@ -1,6 +1,9 @@
-#include <stdexcept>
+#include "../core/exception.hpp"
 #include "processable.hpp"
 #include "process_manager.hpp"
+
+#define BASE_PROCESSABLE_MAKE_ERROR(message) \
+    BASE_MAKE_RUNTIME_ERROR(message)
 
 namespace base
 {
@@ -8,7 +11,7 @@ namespace base
     {
         auto manager = m_process_manager.lock();
         if (!manager)
-            throw std::runtime_error("The ProcessManager object is a null pointer");
+            throw BASE_PROCESSABLE_MAKE_ERROR("The ProcessManager object is a null pointer");
 
         switch (m_process_mode)
         {
@@ -30,7 +33,7 @@ namespace base
     {
         auto manager = m_process_manager.lock();
         if (!manager)
-            throw std::runtime_error("The ProcessManager object is a null pointer");
+            throw BASE_PROCESSABLE_MAKE_ERROR("The ProcessManager object is a null pointer");
 
         if (is_need_process() && m_is_process_enabled)
             _process(manager->get_last_update_delta() * manager->get_time_scale());
@@ -40,7 +43,7 @@ namespace base
     {
         auto manager = m_process_manager.lock();
         if (!manager)
-            throw std::runtime_error("The ProcessManager object is a null pointer");
+            throw BASE_PROCESSABLE_MAKE_ERROR("The ProcessManager object is a null pointer");
 
         if (is_need_process() && m_is_physics_process_enabled)
             _physics_process(manager->get_last_physics_update_delta() * manager->get_time_scale());

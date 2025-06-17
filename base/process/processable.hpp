@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/type.hpp"
+#include "../core/enum.hpp"
 #include "../core/ref.hpp"
 #include "../core/polymorphic_object.hpp"
 

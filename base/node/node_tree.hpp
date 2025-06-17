@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/type.hpp"
+#include "../core/enum.hpp"
 #include "tree_node.hpp"
 
 namespace base
@@ -10,7 +10,7 @@ namespace base
     {
     public:
         /// @brief 节点树状态
-        enum class Status : Int32
+        enum class Status : Enum
         {
             /// @brief 尚未初始化
             Uninitialized,
