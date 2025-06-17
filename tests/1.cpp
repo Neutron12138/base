@@ -1,9 +1,6 @@
 #include <iostream>
 #define BASE_DEFINE_FLOAT_TYPE
 #include "../base/base.hpp"
-#include <glm/glm.hpp>
-#include <glm/detail/type_quat.hpp>
-#include <glm/ext.hpp>
 
 class MyProcessManager : public base::ProcessManager
 {
@@ -77,23 +74,6 @@ int main()
     MyMainLoop main_loop;
     main_loop.run();
     std::cout << "exit code: " << main_loop.get_exit_code() << std::endl;
-
-    glm::vec3 p = {1, 0, 0};
-
-    float angle = M_PI / 2.0f;
-    glm::vec3 axis = {1, 0, 1};
-    axis= glm::normalize(axis);
-    axis = float(sin(angle)) * axis;
-    glm::quat q;
-    q.w = cos(angle);
-    q.x = axis.x;
-    q.y = axis.y;
-    q.z = axis.z;
-    q = glm::normalize(q);
-
-    glm::vec3 v = q * p * glm::conjugate(q);
-
-    std::cout << v.x << "," << v.y << "," << v.z << std::endl;
 
     return 0;
 }
