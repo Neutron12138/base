@@ -38,7 +38,7 @@ protected:
 class MyNotifiable : public base::Notifiable
 {
 public:
-    void notification(base::Enum what) override
+    void notification(base::Int64 what) override
     {
         std::cout << "notification received: " << what << std::endl;
     }
