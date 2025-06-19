@@ -20,7 +20,7 @@ namespace base
         /// @brief 当对象名更改时
         /// @param old_name 旧名字
         /// @param new_name 新名字
-        virtual void _on_name_changed(const std::string &old_name, const std::string &new_name) {}
+        virtual void _on_name_changed(const std::string &old_name, const std::string &new_name) = 0;
 
         /// @brief 直接设置对象名
         /// @param name 对象名

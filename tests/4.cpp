@@ -40,6 +40,10 @@ int main()
     std::cout << "width: " << image->get_width() << std::endl
               << "height: " << image->get_height() << std::endl
               << "format: " << static_cast<base::Int32>(image->get_format()) << std::endl;
+    base::UInt8 *data = const_cast<base::UInt8 *>(image->get_raw_pixels());
+    base::PixelRGB *pixels = reinterpret_cast<base::PixelRGB *>(data);
+    std::cout << pixels[0] << ", " << pixels[1] << std::endl;
+    image->save_as_png("wall_2.png");
 
     return 0;
 }

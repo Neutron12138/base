@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <string>
-#include <stb_image.h>
 #include "base_image.hpp"
 #include "../core/exception.hpp"
 

@@ -3,6 +3,17 @@
 #ifndef STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
 #endif
+#include <stb_image.h>
+
+#ifndef STB_IMAGE_RESIZE_IMPLEMENTATION
+#define STB_IMAGE_RESIZE_IMPLEMENTATION
+#endif
+#include <stb_image_resize2.h>
+
+#ifndef STB_IMAGE_WRITE_IMPLEMENTATION
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#endif
+#include <stb_image_write.h>
 
 #include "../core/type.hpp"
 #include "../others/resource.hpp"
@@ -72,6 +83,30 @@ namespace base
         /// @brief 设置图像格式
         /// @param format 图像格式
         void _set_channels(Format format) { m_format = format; }
+
+    public:
+        /// @brief 将图像保存为PNG格式
+        /// @param filename 文件名
+        virtual void save_as_png(const std::string &filename)
+        {
+            bool success = stbi_write_png(
+                filename.data(), m_width, m_height, static_cast<Int32>(m_format), get_raw_pixels(), 0);
+
+            if (!success)
+                throw std::runtime_error(to_string("Failed to save image as png, filename: \"", filename, "\""));
+        }
+
+        /// @brief 将图像保存为JPG格式
+        /// @param filename 文件名
+        /// @param quality 质量
+        virtual void save_as_jpg(const std::string &filename, int quality)
+        {
+            bool success = stbi_write_jpg(
+                filename.data(), m_width, m_height, static_cast<Int32>(m_format), get_raw_pixels(), quality);
+
+            if (!success)
+                throw std::runtime_error(to_string("Failed to save image as jpg, filename: \"", filename, "\""));
+        }
     };
 
 } // namespace base

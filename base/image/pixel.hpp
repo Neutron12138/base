@@ -14,7 +14,8 @@ namespace base
         UInt8 grey = 0;
 
     public:
-        PixelGrey(UInt8 g = 0) : grey(g) {}
+        PixelGrey() = default;
+        PixelGrey(UInt8 g) : grey(g) {}
     };
 
     /// @brief 灰度、透明度像素
@@ -25,7 +26,8 @@ namespace base
         UInt8 alpha = 0;
 
     public:
-        PixelGA(UInt8 g = 0, UInt8 a = 0)
+        PixelGA() = default;
+        PixelGA(UInt8 g, UInt8 a)
             : PixelGrey(g), alpha(a) {}
     };
 
@@ -41,7 +43,8 @@ namespace base
         UInt8 blue = 0;
 
     public:
-        PixelRGB(UInt8 r = 0, UInt8 g = 0, UInt8 b = 0)
+        PixelRGB() = default;
+        PixelRGB(UInt8 r, UInt8 g, UInt8 b)
             : red(r), green(g), blue(b) {}
     };
 
@@ -53,7 +56,8 @@ namespace base
         UInt8 alpha = 0;
 
     public:
-        PixelRGBA(UInt8 r = 0, UInt8 g = 0, UInt8 b = 0, UInt8 a = 0)
+        PixelRGBA() = default;
+        PixelRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a)
             : PixelRGB(r, g, b), alpha(a) {}
     };
 
