@@ -14,16 +14,25 @@ int main()
     logger.loge("eee");
     std::cout << std::endl;
 
-    std::cout << sizeof(base::PixelGrey) << std::endl
-              << sizeof(base::PixelGA) << std::endl
-              << sizeof(base::PixelRGB) << std::endl
-              << sizeof(base::PixelRGBA) << std::endl
+    std::cout << (sizeof(base::PixelGrey) == sizeof(base::UInt8)) << std::endl
+              << (sizeof(base::PixelGA) == 2 * sizeof(base::UInt8)) << std::endl
+              << (sizeof(base::PixelRGB) == 3 * sizeof(base::UInt8)) << std::endl
+              << (sizeof(base::PixelRGBA) == 4 * sizeof(base::UInt8)) << std::endl
+              << std::is_trivial_v<base::PixelGrey> << std::endl
+              << std::is_trivial_v<base::PixelGA> << std::endl
+              << std::is_trivial_v<base::PixelRGB> << std::endl
+              << std::is_trivial_v<base::PixelRGBA> << std::endl
               << std::endl;
 
-    std::cout << base::PixelGrey(1) << std::endl
-              << base::PixelGA(1, 2) << std::endl
-              << base::PixelRGB(1, 2, 3) << std::endl
-              << base::PixelRGBA(1, 2, 3, 4) << std::endl
+    constexpr base::PixelGrey p1(1);
+    constexpr base::PixelGA p2(1, 2);
+    constexpr base::PixelRGB p3(1, 2, 3);
+    constexpr base::PixelRGBA p4(1, 2, 3, 4);
+
+    std::cout << p1 << std::endl
+              << p2 << std::endl
+              << p3 << std::endl
+              << p4 << std::endl
               << std::endl;
 
     try

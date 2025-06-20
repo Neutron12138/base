@@ -2,20 +2,20 @@
 
 #include <iostream>
 #include "../core/type.hpp"
-#include "../core/compact_object.hpp"
 
 namespace base
 {
     /// @brief 灰度像素
-    class PixelGrey : public CompactObject
+    class PixelGrey
     {
     public:
         /// @brief 灰度
-        UInt8 grey = 0;
+        UInt8 grey;
 
     public:
         PixelGrey() = default;
-        PixelGrey(UInt8 g) : grey(g) {}
+        constexpr PixelGrey(UInt8 g) : grey(g) {}
+        ~PixelGrey() = default;
     };
 
     /// @brief 灰度、透明度像素
@@ -23,29 +23,31 @@ namespace base
     {
     public:
         /// @brief 透明度
-        UInt8 alpha = 0;
+        UInt8 alpha;
 
     public:
         PixelGA() = default;
-        PixelGA(UInt8 g, UInt8 a)
+        constexpr PixelGA(UInt8 g, UInt8 a)
             : PixelGrey(g), alpha(a) {}
+        ~PixelGA() = default;
     };
 
     /// @brief RGB像素
-    class PixelRGB : public CompactObject
+    class PixelRGB
     {
     public:
         /// @brief 红色
-        UInt8 red = 0;
+        UInt8 red;
         /// @brief 绿色
-        UInt8 green = 0;
+        UInt8 green;
         /// @brief 蓝色
-        UInt8 blue = 0;
+        UInt8 blue;
 
     public:
         PixelRGB() = default;
-        PixelRGB(UInt8 r, UInt8 g, UInt8 b)
+        constexpr PixelRGB(UInt8 r, UInt8 g, UInt8 b)
             : red(r), green(g), blue(b) {}
+        ~PixelRGB() = default;
     };
 
     /// @brief RGBA像素
@@ -53,12 +55,13 @@ namespace base
     {
     public:
         /// @brief 透明度
-        UInt8 alpha = 0;
+        UInt8 alpha;
 
     public:
         PixelRGBA() = default;
-        PixelRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a)
+        constexpr PixelRGBA(UInt8 r, UInt8 g, UInt8 b, UInt8 a)
             : PixelRGB(r, g, b), alpha(a) {}
+        ~PixelRGBA() = default;
     };
 
     std::ostream &operator<<(std::ostream &os, const PixelGrey &pixel)

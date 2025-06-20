@@ -6,7 +6,6 @@
 #include "core/debug.hpp"
 #include "core/exception.hpp"
 
-#include "core/compact_object.hpp"
 #include "core/noncopyable_object.hpp"
 #include "core/polymorphic_object.hpp"
 #include "core/rtti_object.hpp"
