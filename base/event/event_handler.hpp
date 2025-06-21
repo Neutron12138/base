@@ -27,7 +27,7 @@ namespace base
     public:
         /// @brief 请求处理事件
         /// @param event 待处理事件
-        void request_handle_event(const EventRef &event)
+        virtual void request_handle_event(const EventRef &event)
         {
             if (m_is_event_handling_enabled)
                 _handle_event(event);
